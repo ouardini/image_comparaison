@@ -32,6 +32,7 @@
 * JDK 1.8.10
 * SDK
 * Gradle
+* Firebase
 
 ## Login Page
 The First Page of the Application requiring the user to input valid credentials to connect.
