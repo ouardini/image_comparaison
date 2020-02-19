@@ -23,7 +23,8 @@ export class AppComponent {
 ) {
     this.initializeApp();
     }
-  
+    toSettings(){this.navCtrl.navigateRoot('/settings');
+    this.menu.enable(false);}
   
 
   initializeApp() {
@@ -47,7 +48,7 @@ export class AppComponent {
         , {
           text: 'Yes',
           handler: () => {
-            this.navCtrl.navigateForward('/home') ;
+            this.navCtrl.navigateRoot('/home') ;
             this.menu.enable(false);
           }
         }

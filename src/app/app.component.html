@@ -10,7 +10,7 @@
               <div id="a">
                 <ion-button fill="clear"  expand="full" color="primary"><ion-icon color="dark" name="contact">  </ion-icon>Account</ion-button><br>
                 <ion-button fill="clear"  expand="full" color="primary"><ion-icon  color="dark" name="image"> </ion-icon>My library</ion-button><br>
-                <ion-button fill="clear"  expand="full" color="primary"><ion-icon  color="dark" name="build"> </ion-icon>Setings</ion-button><br>
+                <ion-button (click)="toSettings()" fill="clear"  expand="full" color="primary"><ion-icon  color="dark" name="build"> </ion-icon>Settings</ion-button><br>
                <ion-button fill="clear"  expand="full" color="primary" (click)="presentAlertConfirm()"><ion-icon color="dark" name="log-out"> </ion-icon>Sign Out</ion-button>
               </div>
               </ion-list>

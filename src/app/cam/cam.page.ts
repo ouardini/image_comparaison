@@ -2,7 +2,11 @@ import { Component } from '@angular/core';
 import {  NavController } from '@ionic/angular' ;
 import { MenuController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
+import {ActivatedRoute} from '@angular/router';
+import { from } from 'rxjs';
+import { Router } from '@angular/router';
 
+declare const edit_db: any;
 
 
 @Component({
@@ -16,7 +20,22 @@ export class CamPage {
   
 
 
-  constructor(private camera: Camera,public navCtrl: NavController , private menu:MenuController)  {}
+  constructor(private camera: Camera,public navCtrl: NavController , private menu:MenuController,public router:Router,public activatedRoute:ActivatedRoute )  
+  { let user=this.activatedRoute.snapshot.paramMap.get('user') ;
+      console.log(user) }
+
+
+
+
+
+
+
+
+
+
+
+
+
  myphoto :any;
  takephoto(){
   const options: CameraOptions = {
@@ -72,7 +91,8 @@ export class CamPage {
         // Handle error
       });
     }
-  menuSHOW(){this.menu.enable(true)}
+  menuSHOW(){
+    this.menu.enable(true)}
    
   
   }

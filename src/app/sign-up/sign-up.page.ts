@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, MenuController } from '@ionic/angular';
 declare const create_db: any;
 declare const fireb_app: any;
 declare const alert_field: any;
@@ -13,7 +13,8 @@ declare const sweet_alert: any;
 })
 export class SignUPPage implements OnInit {
   
-  constructor(public navCtrl: NavController) { }
+  
+  constructor(public navCtrl: NavController ,private menu:MenuController) { this.menu.enable(false);}
   ngOnInit() {
   }
   create_account(){
@@ -31,7 +32,7 @@ export class SignUPPage implements OnInit {
     
     
     
-  gotoSIGNIN() { this.navCtrl.navigateForward('/sign-in'); }
+  gotoSIGNIN() { this.navCtrl.navigateRoot('/sign-in'); }
   
   }
 

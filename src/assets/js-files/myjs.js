@@ -20,19 +20,21 @@
 
   
 function connect_db(username,password){
-    firebase.initializeApp(firebaseConfig);
+  if(window.location.href=="http://localhost:8100/sign-in"){
+  firebase.initializeApp(firebaseConfig);
 
     var db= firebase.database();
  
     var ref = db.ref('user/'+username);
         ref.once("value").then(function(snapshot) {
         if(snapshot.exists()) {db.ref('user/'+username+'/password').on("value", function(snapshot) {
-             if (password==snapshot.val()) {window.location.href = '/cam' ;}
+             if (password==snapshot.val()) {window.location.href = '/cam/'+username ;}
              else {alert_field("password incorrect");}
                  });} 
         else{alert_field("username incorrect");}
-  });
+  });}
 }
+
 function create_db(user,pass){
     firebase.initializeApp(firebaseConfig);
     var db= firebase.database();
@@ -43,7 +45,7 @@ function create_db(user,pass){
             password:pass,
              username:   user,
            });
-
+           connected(username);
            Swal.fire({
             title : 'Welcome '+user+" !",
             text: 'You are now a member',

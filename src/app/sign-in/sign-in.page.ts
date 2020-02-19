@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {  NavController } from '@ionic/angular' ;
+import { Router } from '@angular/router';
+
+import {  NavController, MenuController } from '@ionic/angular' ;
+
 declare const connect_db: any;
 declare const fireb_app: any;
 declare const alert_field: any;
+
 
 declare const fireb_data: any;
 declare const sweet_alert: any;
@@ -14,7 +18,7 @@ declare const sweet_alert: any;
 export class SignINPage implements OnInit {
   
 
-  constructor(public navCtrl: NavController) { }
+  constructor(public navCtrl: NavController,private menu:MenuController,public router:Router) {this.menu.enable(false) }
   ngOnInit() {
   }
   goback(){this.navCtrl.back();}
@@ -25,15 +29,17 @@ export class SignINPage implements OnInit {
     sweet_alert(); 
     var u = <HTMLInputElement>document.getElementById("user");
     var p = <HTMLInputElement>document.getElementById("pwd");
+
     if(p.value=== ""||u.value=== ""){alert_field("please enter all the required fields!")}
-    else{connect_db(u.value,p.value);}
+    else{connect_db(u.value,p.value);
+    }
    
     
     
     }
-    gotoCAM(){ window.location.href = '/cam' }
+    gotoCAM(){  this.navCtrl.navigateRoot('/cam');  }
 
-  gotoSIGNUP(){window.location.href ='/sign-up' ;}
+  gotoSIGNUP(){this.navCtrl.navigateRoot('/sign-up') ;}
  
  
   pswd(){
