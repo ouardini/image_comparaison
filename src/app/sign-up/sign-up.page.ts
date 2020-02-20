@@ -14,7 +14,7 @@ declare const sweet_alert: any;
 export class SignUPPage implements OnInit {
   
   
-  constructor(public navCtrl: NavController ,private menu:MenuController) { this.menu.enable(false);}
+  constructor(public navCtrl: NavController ,private menu:MenuController) { }
   ngOnInit() {
   }
   create_account(){

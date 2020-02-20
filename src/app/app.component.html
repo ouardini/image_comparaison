@@ -1,22 +1,5 @@
-<ion-app style="background: none transparent;" >
-    <ion-menu  side="start">
-        <ion-header>
-          <ion-toolbar text-center>
-            <ion-title>Menu</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content>
-            <ion-list>
-              <div id="a">
-                <ion-button fill="clear"  expand="full" color="primary"><ion-icon color="dark" name="contact">  </ion-icon>Account</ion-button><br>
-                <ion-button fill="clear"  expand="full" color="primary"><ion-icon  color="dark" name="image"> </ion-icon>My library</ion-button><br>
-                <ion-button (click)="toSettings()" fill="clear"  expand="full" color="primary"><ion-icon  color="dark" name="build"> </ion-icon>Settings</ion-button><br>
-               <ion-button fill="clear"  expand="full" color="primary" (click)="presentAlertConfirm()"><ion-icon color="dark" name="log-out"> </ion-icon>Sign Out</ion-button>
-              </div>
-              </ion-list>
-        </ion-content>
-      </ion-menu>
-     
+<ion-app  >
+   
   <ion-router-outlet  main></ion-router-outlet>
 
 </ion-app>

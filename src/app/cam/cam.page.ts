@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {  NavController } from '@ionic/angular' ;
+import {  NavController, AlertController } from '@ionic/angular' ;
 import { MenuController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import {ActivatedRoute} from '@angular/router';
@@ -20,11 +20,13 @@ export class CamPage {
   
 
 
-  constructor(private camera: Camera,public navCtrl: NavController , private menu:MenuController,public router:Router,public activatedRoute:ActivatedRoute )  
-  { let user=this.activatedRoute.snapshot.paramMap.get('user') ;
-      console.log(user) }
+  constructor(private camera: Camera,    public alertController: AlertController,
+    public navCtrl: NavController , private menu:MenuController,public router:Router,public activatedRoute:ActivatedRoute )  
+     { }
 
+   toSettings(){ let user=this.activatedRoute.snapshot.paramMap.get('user') ;
 
+     this.router.navigateByUrl('/settings/'+user); }
 
 
 
@@ -91,9 +93,45 @@ export class CamPage {
         // Handle error
       });
     }
-  menuSHOW(){
-    this.menu.enable(true)}
-   
+    openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+      document.getElementById("mySidenav").style.borderStyle = "solid";
+      document.getElementById("mySidenav").style.borderRightColor="white";
+      
+
+
+    }
+    closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("mySidenav").style.borderStyle = "none";
+      document.getElementById("mySidenav").style.borderRightColor="black";
+
+    }
+    async presentAlertConfirm() {
+      const alert = await this.alertController.create({
+        header: 'Alert!!',
+        message: 'Are you sure you want to sign out ?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel'); }
+           }
+          , {
+            text: 'Yes',
+            handler: () => {
+              this.navCtrl.navigateRoot('/sign-in') ;
+            }
+          }
+        ]
+      });
+  
+      await alert.present();
+    }
+  
+    
   
   }
   

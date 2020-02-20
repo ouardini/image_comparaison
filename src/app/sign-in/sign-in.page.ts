@@ -18,7 +18,7 @@ declare const sweet_alert: any;
 export class SignINPage implements OnInit {
   
 
-  constructor(public navCtrl: NavController,private menu:MenuController,public router:Router) {this.menu.enable(false) }
+  constructor(public navCtrl: NavController,private menu:MenuController,public router:Router) { }
   ngOnInit() {
   }
   goback(){this.navCtrl.back();}

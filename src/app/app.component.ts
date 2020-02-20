@@ -6,7 +6,9 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {  NavController } from '@ionic/angular' ;
 import { MenuController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
+import { from } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -14,6 +16,7 @@ import { MenuController } from '@ionic/angular';
 })
 export class AppComponent {
   constructor(
+    public router:Router,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
@@ -23,8 +26,7 @@ export class AppComponent {
 ) {
     this.initializeApp();
     }
-    toSettings(){this.navCtrl.navigateRoot('/settings');
-    this.menu.enable(false);}
+   
   
 
   initializeApp() {
@@ -33,31 +35,8 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
-  async presentAlertConfirm() {
-    const alert = await this.alertController.create({
-      header: 'Alert!!',
-      message: 'Are you sure you want to sign out ?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel'); }
-         }
-        , {
-          text: 'Yes',
-          handler: () => {
-            this.navCtrl.navigateRoot('/home') ;
-            this.menu.enable(false);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
   
+ 
 
 
   

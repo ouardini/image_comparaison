@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: 'sign-up', loadChildren: './sign-up/sign-up.module#SignUPPageModule' },
   { path: 'sign-in', loadChildren: './sign-in/sign-in.module#SignINPageModule' },
   { path: 'cam/:user', loadChildren: './cam/cam.module#CamPageModule' },
-  { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
+  { path: 'settings/:user', loadChildren: './settings/settings.module#SettingsPageModule' },
 ];
 
 @NgModule({
