@@ -21,13 +21,11 @@
       color: #5F5F5F;
     }
     #s{color:blue}
-    #in{
-  opacity: 0;
-}
+    
 
   </style>
   <ion-toolbar>
-    <ion-icon (click)="toCam()" name="arrow-back"></ion-icon>
+    <ion-button color="white" (click)="toCam()"><ion-icon color="dark" name="arrow-back"></ion-icon></ion-button>
     <ion-title text-center>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -39,9 +37,10 @@
       <h3><b id="u"></b></h3> 
       <h5><b id="f"></b>{{s}}<b id="l"></b></h5> 
       <p id="e"></p>
-      <label id="s" for="in">change your profile picture</label>
-      <input type="file" id="in" (change)="up()" name="pic" accept=".png, .jpg, .jpeg">
+      <ion-button id="in" (click)="up()" >change your profile picture</ion-button>
 
     </div>
   </div>
+  <div style="margin-top: 30%;" text-center>
+  <ion-button expand="block" (click)="delete()" color="danger">delete account</ion-button></div>
 </ion-content>

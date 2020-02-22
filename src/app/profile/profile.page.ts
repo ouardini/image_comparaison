@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute ,Router} from '@angular/router';
-
+import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { MenuController, NavController, AlertController } from '@ionic/angular';
 declare const fireb_app: any;
 declare const alert_field: any;
@@ -10,7 +10,7 @@ declare const set_data2: any;
 declare const save_db: any;
 declare const confirm_field: any;
 declare const previaw: any;
-
+declare const delete_db: any;
 declare const fireb_storage: any;
 declare const fireb_auth: any;
 @Component({
@@ -21,7 +21,7 @@ declare const fireb_auth: any;
 export class ProfilePage implements OnInit {
   myphoto: string;
 
-  constructor( public alertController: AlertController,
+  constructor(private camera: Camera, public alertController: AlertController,
     public navCtrl: NavController , private menu:MenuController,public router:Router,public activatedRoute:ActivatedRoute) { }
     user=this.activatedRoute.snapshot.paramMap.get('user') ;
 
@@ -39,16 +39,57 @@ export class ProfilePage implements OnInit {
 set_data2(this.user);
 
   }
+  pickImage() {
+    const options: CameraOptions = {
+    quality: 100,
+    sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+    destinationType: this.camera.DestinationType.DATA_URL,
+    saveToPhotoAlbum:false,
+    
+    }
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      // let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.myphoto= 'data:image/jpeg;base64,' + imageData;
 
+    }, (err) => {
+      // Handle error
+    });
+  }
   up(){
-    fireb_app();
+    
+    const options: CameraOptions = {
+      quality: 100,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      saveToPhotoAlbum:false,
+      
+      }
+      this.camera.getPicture(options).then((imageData) => {
+        fireb_app();
     fireb_data();
     fireb_storage()
     fireb_auth();
     sweet_alert(); 
-    
-    previaw(this.user)}
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        // let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.myphoto= 'data:image/jpeg;base64,' + imageData;
+      previaw(this.user,this.myphoto);
+        
+  
+      }, (err) => {
+        // Handle error
+      });
+    }
 
     toCam(){this.router.navigateByUrl('/cam/'+this.user);}
-
+delete(){
+  fireb_app();
+  fireb_data();
+  fireb_storage()
+  fireb_auth();
+  sweet_alert();
+  delete_db(this.user)}
 }

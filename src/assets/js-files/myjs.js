@@ -181,7 +181,22 @@ Swal.fire({
 })
   return new Promise((resolve) => setTimeout(resolve, time));
 }
-function previaw(username) { 
+function previaw(username,myphoto) { 
+  firebase.initializeApp(firebaseConfig);
+   var i = document.getElementById("i");
+   
+
+ 
+    i.src = myphoto;
+    firebase.storage().ref(username+'.jpg').putString(i.src, 'data_url');
+
+  
+   sleep(4000).then(() => {
+    window.location.href = '/profile/'+username ;
+  });
+}
+
+/*function previaw(username,myphoto) { 
   firebase.initializeApp(firebaseConfig);
    var i = document.getElementById("i");
     const reader = new FileReader();
@@ -200,7 +215,7 @@ function previaw(username) {
    sleep(4000).then(() => {
     window.location.href = '/profile/'+username ;
   });
-}
+}*/
 
 
   
@@ -277,4 +292,32 @@ ref.once("value").then(function(snapshot) {
      l.innerHTML=snapshot.val().toString();}
 })
 
+}
+function delete_db(username) {
+  swal.fire({
+    title: 'Are you sure?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, cancel!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.value) {
+      firebase.initializeApp(firebaseConfig);
+  
+
+  var db= firebase.database();
+  var storageRef=firebase.storage().ref();
+  var desertRef = storageRef.child(username+'.jpg');
+  db.ref('user/'+username).remove();
+
+desertRef.delete();
+
+
+sleep(4000).then(() => {
+  window.location.href = '/sign-in' ;
+});
+    } 
+  })
+  
 }
