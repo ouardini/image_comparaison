@@ -1,6 +1,7 @@
 <ion-header>
 
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
    
@@ -112,12 +113,30 @@
   font-size: 36px;
   margin-left: 50px;
 }
-
+#h { padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  display: block;
+  transition: 0.3s;
+  color: #ffffff;
+  top: 0;
+  left: 25px;
+  margin-right: 50px;}
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
-    
+#he { padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size:10px;
+  display: block;
+  transition: 0.3s;
+  color: #ffffff;
+  top: 0;
+  left: 25px;
+  margin-right: 50px;}
+    img{
+      border-radius: 50%;}
   </style>
 </ion-header>
 
@@ -128,8 +147,10 @@
 <ion-content class="background" id="n">
   <div id="mySidenav" class="sidenav">
     <a  class="closebtn" style="cursor:pointer" (click)="closeNav()">&times;</a>
-    <a ><ion-icon color="dark" name="contact"></ion-icon > Profil</a>
-    <a ><ion-icon  color="dark" name="image"></ion-icon> My library</a>
+    <div id="he" ><img id="im" src="" ></div>
+    <div id="h" >Hi {{user}}</div>
+    <a (click)="toProfile()" ><ion-icon color="dark" name="contact"></ion-icon > Profile</a>
+    <a ><ion-icon  color="dark" name="image"></ion-icon> library</a>
     <a (click)="toSettings()" ><ion-icon  color="dark" name="build"></ion-icon> Settings</a>
     <a (click)="presentAlertConfirm()"><ion-icon color="dark" name="log-out"></ion-icon> Sign out</a>
   </div>

@@ -8,6 +8,7 @@ declare const fireb_data: any;
 declare const sweet_alert: any;
 declare const set_data: any;
 declare const save_db: any;
+declare const confirm_field: any;
 
 
 
@@ -18,7 +19,7 @@ declare const save_db: any;
 })
 export class SettingsPage implements OnInit {
 
-  constructor( public activatedRoute:ActivatedRoute ) { 
+  constructor( public activatedRoute:ActivatedRoute ,public router:Router) { 
     
     }
 
@@ -28,17 +29,23 @@ export class SettingsPage implements OnInit {
     fireb_app();
     fireb_data();
     sweet_alert(); 
+    
+  set_data(this.user);}
 
 
-  set_data(this.user);
 
 
-  }
+  
+
   user=this.activatedRoute.snapshot.paramMap.get('user') ;
   save(){
     fireb_app();
     fireb_data();
     sweet_alert();
-     save_db(this.user)}
+    confirm_field(this.user);
+     }
+    
+   cancel(){ this.router.navigateByUrl('/cam/'+this.user); 
+     }  
    
 }

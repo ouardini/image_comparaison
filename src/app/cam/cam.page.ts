@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {  NavController, AlertController } from '@ionic/angular' ;
 import { MenuController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
@@ -6,15 +6,24 @@ import {ActivatedRoute} from '@angular/router';
 import { from } from 'rxjs';
 import { Router } from '@angular/router';
 
-declare const edit_db: any;
+declare const fireb_app: any;
+declare const alert_field: any;
+declare const fireb_data: any;
+declare const sweet_alert: any;
+declare const set_data3: any;
+declare const save_db: any;
+declare const confirm_field: any;
+declare const previaw: any;
 
+declare const fireb_storage: any;
+declare const fireb_auth: any;
 
 @Component({
   selector: 'app-cam',
   templateUrl: './cam.page.html',
   styleUrls: ['./cam.page.scss'],
 })
-export class CamPage {
+export class CamPage implements OnInit {
   
 
   
@@ -23,10 +32,21 @@ export class CamPage {
   constructor(private camera: Camera,    public alertController: AlertController,
     public navCtrl: NavController , private menu:MenuController,public router:Router,public activatedRoute:ActivatedRoute )  
      { }
+  user=this.activatedRoute.snapshot.paramMap.get('user') ;
+   toSettings(){this.router.navigateByUrl('/settings/'+this.user); }
+   toProfile(){ this.router.navigateByUrl('/profile/'+this.user);}
 
-   toSettings(){ let user=this.activatedRoute.snapshot.paramMap.get('user') ;
+   ngOnInit() { 
+    
+  fireb_app();
+  fireb_data();
+  fireb_storage()
+  fireb_auth();
+  sweet_alert(); 
+  
+set_data3(this.user);
 
-     this.router.navigateByUrl('/settings/'+user); }
+  }
 
 
 
@@ -131,7 +151,6 @@ export class CamPage {
       await alert.present();
     }
   
-    
   
   }
   
