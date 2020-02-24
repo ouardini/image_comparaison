@@ -10,6 +10,7 @@ declare const set_data2: any;
 declare const save_db: any;
 declare const confirm_field: any;
 declare const previaw: any;
+declare const previw: any;
 declare const delete_db: any;
 declare const fireb_storage: any;
 declare const fireb_auth: any;
@@ -64,7 +65,9 @@ set_data2(this.user);
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
       saveToPhotoAlbum:false,
-      
+      allowEdit:true,
+      targetWidth:200,
+      targetHeight:200,
       }
       this.camera.getPicture(options).then((imageData) => {
         fireb_app();
@@ -83,6 +86,7 @@ set_data2(this.user);
         // Handle error
       });
     }
+    
 
     toCam(){this.router.navigateByUrl('/cam/'+this.user);}
 delete(){
