@@ -2,7 +2,7 @@
   <style>
    .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
+  transition:none;
   width: 85%;
   margin: auto;
 }
@@ -22,24 +22,46 @@
     }
     #s{color:blue}
     
+    #i{height:250px;}
+    .p-image {
+      font-size: 120%;
+  position: absolute;
+  top: 280px;
+  right: 30px;
+  color:white;
+}
+.p-image:hover {
+  font-size: 130%;
+  color:rgb(174, 172, 184);
+}
+
+
+#h{top:10px;
+}
 
   </style>
-  <ion-toolbar>
-    <ion-button color="white" (click)="toCam()"><ion-icon color="dark" name="arrow-back"></ion-icon></ion-button>
-    <ion-title text-center>Profile</ion-title>
-  </ion-toolbar>
 </ion-header>
+   
 
 <ion-content>
+  <div id="h">
+    
+ <ion-icon style="font-size: 190%; float:left;" color="dark" (click)="toCam()" name="arrow-back"></ion-icon>
+    <h1  style="padding-left:39%;">Profile</h1></div>
+
   <div class="card">
-    <img src="" id="i" alt="Avatar" style="width:100%">
+   <div><img src="http://cdn.onlinewebfonts.com/svg/img_191958.png" id="i" alt="Avatar" style="width:100%"></div>  
+   <div class="p-image">
+    <ion-icon name="brush" (click)="up()"></ion-icon>
+  </div>
+    
     <div class="container">
       <h3><b id="u"></b></h3> 
       <h5><b id="f"></b>{{s}}<b id="l"></b></h5> 
       <p id="e"></p>
-      <ion-button id="in" (click)="up()" >change your profile picture</ion-button>
         </div>
   </div>
-  <div style="margin-top: 30%;" text-center>
+  <div style="margin-top: 26%;" text-center>
   <ion-button expand="block" (click)="delete()" color="danger">delete account</ion-button></div>
+  
 </ion-content>

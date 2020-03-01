@@ -14,9 +14,13 @@ declare const set_data3: any;
 declare const save_db: any;
 declare const confirm_field: any;
 declare const previaw: any;
-
+declare const fire: any;
+declare const fire_fire: any;
 declare const fireb_storage: any;
 declare const fireb_auth: any;
+declare const add: any;
+declare const jqr: any;
+
 
 @Component({
   selector: 'app-cam',
@@ -43,9 +47,14 @@ export class CamPage implements OnInit {
   fireb_storage()
   fireb_auth();
   sweet_alert(); 
-  
-set_data3(this.user);
-
+  jqr();
+  set_data3(this.user);
+  fireb_app();
+  fireb_data();
+  fireb_storage()
+  fireb_auth();
+   add(this.user); 
+    
   }
 
 

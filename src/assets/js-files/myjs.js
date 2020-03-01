@@ -156,7 +156,7 @@ function sleep (time) {
 Swal.fire({
   title: 'Wait..',
  
-  timer: 5000,
+  timer: time,
   timerProgressBar: true,
   onBeforeOpen: () => {
     Swal.showLoading()
@@ -174,10 +174,7 @@ Swal.fire({
     clearInterval(timerInterval)
   }
 }).then((result) => {
-  /* Read more about handling dismissals below */
-  if (result.dismiss === Swal.DismissReason.timer) {
-    console.log('I was closed by the timer')
-  }
+  
 })
   return new Promise((resolve) => setTimeout(resolve, time));
 }
@@ -320,4 +317,64 @@ sleep(4000).then(() => {
     } 
   })
   
+}
+
+
+
+function add(username){
+     
+firebase.initializeApp(firebaseConfig);
+sleep(2000).then(() => {
+
+      var db= firebase.database();
+      
+      db.ref("dates").orderByKey().on("child_added", function(snapshot) {
+        var i=0;
+        var n=2;
+        n++;
+        db.ref('dates/'+snapshot.key+'/date').on("value", function(snapshot) {
+          var res = snapshot.val().split("/");
+          var month = [
+            'January', 'February', 'March', 'April', 'May',
+            'June', 'July', 'August', 'September',
+            'October', 'November', 'December'
+            ];
+          if(snapshot.exists()){
+          $("#div1").prepend("<div  'id="+n+"> <div class='card' style='background-color:#00C6FF;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);width:80%;margin:auto;border-radius:5%;'> <h2 text-center><b style='padding-left:40%;color:#aaf0d1;font-size: 50%;'>"+month[res[1]-1]+" "+ res[0]+","+ res[2]+"</b></h2><table style='border-collapse: collapse; width:90%;'><tr><th>Products</th><th>Quantity</th></tr></table> <div id='div2'> </div> </div> </div>")}})
+          var d=snapshot.key;
+          
+          db.ref('dates/'+d+'/products').orderByKey().on("child_added", function(snapshot) {
+           var p=snapshot.key;
+           
+           db.ref('dates/'+d+'/products/'+p+'/'+username).on("value", function(snapshot) {
+            
+              if(snapshot.exists()){
+             $("#div2").prepend("<table><tr><td> "+p+"</td><td>"+snapshot.val()+"</td></tr></table>")
+            
+             i++;}
+          
+          })
+            
+            }) 
+     $("table").css({"border-collapse": "collapse", "width": "90%",});
+       $("th").css({"padding": "8px", "text-align": "center", "border-bottom": "1px solid #ddd" ,"font-size":"85%" , "color":"#ffffff"});
+       $("td").css({"padding": "8px", "text-align":"center", "border-bottom": "1px solid #ddd" , "color":"#ffffff"});
+    if(i==0){ $("#"+n).remove();}
+      }); 
+    
+       })
+      
+       /*var db= firebase.database();
+
+      db.ref('dates/day4/products').orderByKey().on("child_added", function(snapshot) {
+        var j=snapshot.key;
+        db.ref('dates/day4/products/'+j).orderByKey().on("child_added", function(snapshot) {
+          var i=snapshot.key;            
+          console.log(i);
+          })
+         
+      }); */
+           
+
+ 
 }

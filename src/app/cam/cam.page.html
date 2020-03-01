@@ -7,8 +7,9 @@
    
     #n {
       margin-top: 10%;
-     
+      
     }
+    
     h1 {
       font-family:'noto';
       
@@ -18,7 +19,9 @@
 
     }
     #j{
+      font-size: 73%;
       margin-left:10%;
+      color: #00C6FF;
     }
 
 
@@ -140,6 +143,16 @@
     #im{width: 80%;
        height: 5%;
       border-radius: 50%;}
+      .card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition:none;
+  width: 85%;
+  margin: auto;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
   </style>
 </ion-header>
 
@@ -147,7 +160,7 @@
 
 
 
-<ion-content class="background" id="n">
+<ion-content  id="n">
   <div id="mySidenav" class="sidenav">
     <a  class="closebtn" style="cursor:pointer" (click)="closeNav()">&times;</a>
     <div id="he" ><img id="im" src="" ></div>
@@ -161,21 +174,19 @@
   <div>
   <h1> <ion-buttons  (click)="openNav()"  slot="start">
     <ion-menu-button  style="font-size:30px;cursor:pointer" color="dark" (click)="openNav()"  autoHide="false"></ion-menu-button>
-    <b color="dark" id="j">See More<ion-icon color="dark" name="school"></ion-icon></b>
+    <b id="j">purchases history</b>
   </ion-buttons> </h1>
  </div>
+
  
-  <div text-center class="row">
-    <form >
-<p><img src="{{myphoto}}"></p>
-      <button id="in" (click)=" takephoto()"><div id="un"><B>Take a photo</B></div></button> 
-      <button id="en" (click)=" pickImage()"><div id="un"><B>pick a photo</B></div></button> 
-      <button id="cn" (click)="corpImage()"><div id="un"><B> edit a photo</B></div></button> 
-      
 
 
-    </form>
-  </div>
+  <ion-item-group id="div1">
+   
+    
+  </ion-item-group>
+  
+ 
 </ion-content>
 
 
