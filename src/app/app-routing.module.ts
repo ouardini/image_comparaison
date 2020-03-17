@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'cam/:user', loadChildren: './cam/cam.module#CamPageModule' },
   { path: 'settings/:user', loadChildren: './settings/settings.module#SettingsPageModule' },
   { path: 'profile/:user', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'discount/:user', loadChildren: './discount/discount.module#DiscountPageModule' },
 ];
 
 @NgModule({

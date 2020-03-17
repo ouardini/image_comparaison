@@ -20,6 +20,7 @@ declare const fireb_storage: any;
 declare const fireb_auth: any;
 declare const add: any;
 declare const jqr: any;
+declare const set: any;
 
 
 @Component({
@@ -39,9 +40,20 @@ export class CamPage implements OnInit {
   user=this.activatedRoute.snapshot.paramMap.get('user') ;
    toSettings(){this.router.navigateByUrl('/settings/'+this.user); }
    toProfile(){ this.router.navigateByUrl('/profile/'+this.user);}
+   toDiscount(){ this.router.navigateByUrl('/discount/'+this.user);}
 
    ngOnInit() { 
+     var i: number;
+  
     
+  
+  sweet_alert(); 
+  fireb_app();
+  fireb_data();
+  fireb_storage()
+  fireb_auth();
+   add(this.user); 
+   
   fireb_app();
   fireb_data();
   fireb_storage()
@@ -49,12 +61,7 @@ export class CamPage implements OnInit {
   sweet_alert(); 
   jqr();
   set_data3(this.user);
-  fireb_app();
-  fireb_data();
-  fireb_storage()
-  fireb_auth();
-   add(this.user); 
-    
+  
   }
 
 

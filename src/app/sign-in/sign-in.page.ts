@@ -6,8 +6,7 @@ import {  NavController, MenuController } from '@ionic/angular' ;
 declare const connect_db: any;
 declare const fireb_app: any;
 declare const alert_field: any;
-
-
+declare const jqr: any;
 declare const fireb_data: any;
 declare const sweet_alert: any;
 @Component({
@@ -24,6 +23,7 @@ export class SignINPage implements OnInit {
   goback(){this.navCtrl.back();}
   
   confirm(){
+    jqr();
     fireb_app();
     fireb_data();
     sweet_alert(); 

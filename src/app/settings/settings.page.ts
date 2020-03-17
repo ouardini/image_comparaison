@@ -9,6 +9,7 @@ declare const sweet_alert: any;
 declare const set_data: any;
 declare const save_db: any;
 declare const confirm_field: any;
+declare const savy: any;
 
 
 
@@ -42,7 +43,8 @@ export class SettingsPage implements OnInit {
     fireb_app();
     fireb_data();
     sweet_alert();
-    confirm_field(this.user);
+    /*confirm_field(this.user);*/
+    savy(this.user);
      }
     
    cancel(){ this.router.navigateByUrl('/cam/'+this.user); 

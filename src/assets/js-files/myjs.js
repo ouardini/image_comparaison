@@ -8,6 +8,32 @@
     messagingSenderId: "390764991932",
     appId: "1:390764991932:web:95fe64c8b6f85836e8c7b9"
   };
+  function savy(username){
+    firebase.initializeApp(firebaseConfig);
+
+swal.fire({
+title: 'tap Your password',
+icon: 'warning',
+html: '<input type="password" id="ii">' ,
+showCancelButton: true,
+confirmButtonText: 'Yes, save it!',
+cancelButtonText: 'No, cancel!',
+reverseButtons: true
+}).then((result) => {
+if (result.value) {
+ var iii=document.getElementById("ii");
+ 
+ firebase.database().ref('user/'+username+'/password').once("value", function(snapshot) {
+
+   if (iii.value==snapshot.val()) {
+    sleep(2000).then(() => {
+      set(username);  
+    confirm_field(username);})}
+   else{ alert_field("password incorrect")  }})
+ } 
+
+})
+}
 
   function  alert_field(message)
   {
@@ -44,7 +70,8 @@ function connect_db(username,password){
 
         if(snapshot.exists()) {db.ref('user/'+username+'/password').on("value", function(snapshot) {
 
-             if (password==snapshot.val()) {window.location.href = '/cam/'+username ;}
+             if (password==snapshot.val()) {
+               window.location.href = '/cam/'+username ;}
              else {alert_field("password incorrect");}
             }     
             );
@@ -112,16 +139,14 @@ ref.once("value").then(function(snapshot) {
 
 var ref = db.ref('user/'+username+'/password');
 ref.once("value").then(function(snapshot) { 
-  p.value=snapshot.val().toString();
-  c.value=snapshot.val().toString();
+  /*p.placeholde="tap your new password";
+  c.placeholde="confirm your new password";*/
 })
 }
 
 function save_db(username) {
-
-  firebase.initializeApp(firebaseConfig);
-    var db= firebase.database();
-    var ref = db.ref('user/'+username);
+  var db= firebase.database();
+  var ref = db.ref('user/'+username);
     var e = document.getElementById("email");
     var f = document.getElementById("fname");
     var l = document.getElementById("lname");
@@ -130,9 +155,9 @@ function save_db(username) {
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
    
     if(c.value!=p.value){alert_field("Password mismatch")}
-      if(p.value==""){alert_field("Password required")}
       if(!e.value.match(mailformat) ){alert_field("Invalid email address")}
-   if(c.value==p.value && p.value!="" && e.value.match(mailformat)  ){
+   if(c.value==p.value  && e.value.match(mailformat)  ){
+     if(p.value!=""){
     ref.once("value").then(function(snapshot) {
       db.ref('user/'+username).set({
         username:username,
@@ -141,7 +166,22 @@ function save_db(username) {
          lname:l.value,
          password:p.value,
        })
-           })
+           })}
+       if(p.value==""){
+         ref.once("value").then(function(snapshot) {
+          db.ref('user/'+username+'/password').on("value", function(snapshot) {
+           var pp=snapshot.val().toString();
+            db.ref('user/'+username).set({
+              username:username,
+               email:e.value,
+               fname:f.value,
+               lname:l.value,
+               password: pp,
+             })
+          })
+
+           
+                   })}  
            Swal.fire({
             title : 'Saved!',
            preConfirm: () => {
@@ -149,7 +189,10 @@ function save_db(username) {
            window.location.href = '/sign-in' ;}
 
             } )
+          
            }
+
+           
 }
 function sleep (time) {
   let timerInterval
@@ -323,58 +366,237 @@ sleep(4000).then(() => {
 
 function add(username){
      
-firebase.initializeApp(firebaseConfig);
-sleep(2000).then(() => {
+  firebase.initializeApp(firebaseConfig);
 
-      var db= firebase.database();
-      
-      db.ref("dates").orderByKey().on("child_added", function(snapshot) {
-        var i=0;
-        var n=2;
-        n++;
-        db.ref('dates/'+snapshot.key+'/date').on("value", function(snapshot) {
-          var res = snapshot.val().split("/");
-          var month = [
-            'January', 'February', 'March', 'April', 'May',
-            'June', 'July', 'August', 'September',
-            'October', 'November', 'December'
-            ];
-          if(snapshot.exists()){
-          $("#div1").prepend("<div  'id="+n+"> <div class='card' style='background-color:#00C6FF;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);width:80%;margin:auto;border-radius:5%;'> <h2 text-center><b style='padding-left:40%;color:#aaf0d1;font-size: 50%;'>"+month[res[1]-1]+" "+ res[0]+","+ res[2]+"</b></h2><table style='border-collapse: collapse; width:90%;'><tr><th>Products</th><th>Quantity</th></tr></table> <div id='div2'> </div> </div> </div>")}})
-          var d=snapshot.key;
-          
-          db.ref('dates/'+d+'/products').orderByKey().on("child_added", function(snapshot) {
-           var p=snapshot.key;
-           
-           db.ref('dates/'+d+'/products/'+p+'/'+username).on("value", function(snapshot) {
-            
-              if(snapshot.exists()){
-             $("#div2").prepend("<table><tr><td> "+p+"</td><td>"+snapshot.val()+"</td></tr></table>")
-            
-             i++;}
-          
-          })
-            
-            }) 
-     $("table").css({"border-collapse": "collapse", "width": "90%",});
-       $("th").css({"padding": "8px", "text-align": "center", "border-bottom": "1px solid #ddd" ,"font-size":"85%" , "color":"#ffffff"});
-       $("td").css({"padding": "8px", "text-align":"center", "border-bottom": "1px solid #ddd" , "color":"#ffffff"});
-    if(i==0){ $("#"+n).remove();}
-      }); 
+sleep(1500).then(() => {
+var db= firebase.database();
+var i=0;
+var n=2;
+var j=0;
+  db.ref("dates").orderByKey().on("child_added", function(snapshot) {
+n++;
+db.ref('dates/'+snapshot.key+'/date').on("value", function(snapshot) {
+  var res = snapshot.val().split("/");
+  var month = [
+    'January', 'February', 'March', 'April', 'May',
+    'June', 'July', 'August', 'September',
+    'October', 'November', 'December'
+    ];
+  if(snapshot.exists()){
+  $("#div1").prepend("<div  'id="+n+"> <div class='card' style='background-color:#00C6FF;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);width:80%;margin:auto;border-radius:5%;'> <h2 text-center><b style='padding-left:40%;color:#aaf0d1;font-size: 50%;'>"+month[res[1]-1]+" "+ res[0]+","+ res[2]+"</b></h2><table style='border-collapse: collapse; width:90%;'><tr><th>Products</th><th>Quantity</th></tr></table> <div id='div2'> </div> </div> </div>")}})
+  var d=snapshot.key;
+  
+  db.ref('dates/'+d+'/products').orderByKey().on("child_added", function(snapshot) {
+   var p=snapshot.key;
+   
+   db.ref('dates/'+d+'/products/'+p+'/'+username).on("value", function(snapshot) {
     
-       })
-      
-       /*var db= firebase.database();
+      if(snapshot.exists()){
+     $("#div2").prepend("<table><tr><td> "+p+"</td><td>"+snapshot.val()+"</td></tr></table>")
+     j++;
+     i++;
+     console.log(i)
+    }
+  
+  })
+    
+    })  
 
-      db.ref('dates/day4/products').orderByKey().on("child_added", function(snapshot) {
-        var j=snapshot.key;
-        db.ref('dates/day4/products/'+j).orderByKey().on("child_added", function(snapshot) {
-          var i=snapshot.key;            
-          console.log(i);
-          })
-         
-      }); */
+      if(i==0){ $("#"+n).remove();}
+
+});})
+sleep(2500).then(() => { 
+$("table").css({"table-layout": "fixed","border-collapse": "collapse", "width": "90%",});
+$("th").css({"padding": "8px", "text-align": "center", "border-bottom": "1px solid #ddd" ,"font-size":"85%" , "color":"#ffffff"});
+$("td").css({"padding": "8px", "text-align":"center", "border-bottom": "1px solid #ddd" , "color":"#ffffff"});})
+sleep(3500).then(() => { 
+if(j==0){
+   $("#div1").remove();
+   console.log(i)
+$("#divv1").prepend("<p style='margin-top:50%;color:#DBE7ED;' text-center><b>you have never came to our store</b></p>");
+}})
+        
+             
+
+      
+    
+     
+    
+  
+      
+      
+      
            
 
  
 }
+
+function write2(p,username,a){
+  firebase.database().ref('product_stats/'+p+'/'+username).set({
+    total_qte:parseInt(a),
+  });
+
+}
+function write1(p,username){
+  firebase.database().ref('product_stats/'+p+'/'+username).set({
+    total_qte:0,
+  });
+}
+function write3(username){
+  var n=1;
+  var j="r";
+  var c=0;
+  firebase.database().ref('user/'+username+'/top_product').orderByKey().on('child_added', function(snapshot){ 
+     if(parseInt(snapshot.val())>=n){
+     n=parseInt(snapshot.val());
+       j=snapshot.key.toString();
+      }
+       get_topPro(j,n,username,c); 
+     
+        c++;
+
+
+        })
+
+}
+
+function write0(username) {
+  var db= firebase.database();
+ 
+  db.ref("product_stats").orderByKey().on("child_added", function(snapshot) {
+    var p=snapshot.key;
+    db.ref('product_stats/'+p+'/'+username+'/total_qte').once("value", function(snapshot) {
+    write1(p,username);
+  
+  })
+
+  })
+}
+function write4(username) {
+  var db= firebase.database();
+ 
+  db.ref('product_stats').orderByKey().on("child_added", function(snapshot) { 
+    var d =snapshot.key;
+
+    db.ref('product_stats/'+d+'/'+username+'/total_qte').on("value", function(snapshot) {
+     
+      var c=snapshot.val();
+      firebase.database().ref().child('/user/'+username+'/top_product')
+      .update({ [d.toString()]:parseInt(c)});
+      
+      })   
+    })
+}
+
+function set(username){
+var ll=0;
+  var db= firebase.database();
+  firebase.database().ref('product_stats').orderByKey().on("child_added", function(snapshot) {
+   
+      var p=snapshot.key;
+     write1(p,username);
+
+  })  
+  
+  db.ref("dates").orderByKey().on("child_added", function(snapshot) {
+      var d =snapshot.key;
+      db.ref('dates/'+d+'/products').orderByKey().on("child_added", function(snapshot) {
+      var p=snapshot.key;
+      
+      db.ref('dates/'+d+'/products/'+p+'/'+username).on("value", function(snapshot) {
+              
+        if(snapshot.exists()){
+             var s=snapshot.val();
+             ll++; 
+                     
+                                   
+             db.ref('product_stats/'+p+'/'+username+'/total_qte').once("value", function(snapshot) {
+              
+            a=parseInt( parseInt(snapshot.val())+s);
+            write2(p,username,a);
+
+                })
+              } 
+
+    })
+        })  
+  })
+  
+ sleep(2000).then(() => {if(ll!=0){
+   
+    write4(username);
+
+
+  }
+  else{
+    /*$("#ddd").prepend("<p style='margin-top:50%;color:#DBE7ED;' text-center><b>you have never came to our store</b></p>");*/
+  }})
+}
+
+    function  get_topPro(sk,sv,username,c){
+      
+      firebase.database().ref('user/'+username).once("value")
+      .then(function(snapshot) {
+            var b = snapshot.child("top_product").numChildren(); 
+
+        if(  c == b-1 ) {
+   $("#ddd").prepend('<div style="border: 5px solid #bbb; width: 80%; border-radius: 15px; margin: 0 auto; max-width: 600px;" class="coupon"> <div style="padding: 2px 16px; background-color: #f1f1f1;" class="container"> <h3>'+sk.toUpperCase()+'</h3> </div> <div class="container" style="padding: 2px 16px;background-color:white"> <h2><b>20% OFF YOUR PURCHASE '+sk.toUpperCase()+'</b></h2> </div> <div style="padding: 2px 16px; background-color: #f1f1f1;" class="container"> <p>Use Promo Code: <span style="background: #ccc; padding: 3px;" class="promo">BOH232</span></p> <p style="color: red;"  class="expire">Expires: Jan 03, 2021</p> </div> </div>');
+
+}
+
+  })
+  
+    }  
+
+ 
+
+    function set2(username){
+      var ll=0;
+      firebase.initializeApp(firebaseConfig);
+        var db= firebase.database();
+        firebase.database().ref('product_stats').orderByKey().on("child_added", function(snapshot) {
+         
+            var p=snapshot.key;
+           write1(p,username);
+        })  
+        
+        db.ref("dates").orderByKey().on("child_added", function(snapshot) {
+            var d =snapshot.key;
+            db.ref('dates/'+d+'/products').orderByKey().on("child_added", function(snapshot) {
+            var p=snapshot.key;
+            
+            db.ref('dates/'+d+'/products/'+p+'/'+username).on("value", function(snapshot) {
+                    
+              if(snapshot.exists()){
+                   var s=snapshot.val();
+                   ll++; 
+                           
+                                         
+                   db.ref('product_stats/'+p+'/'+username+'/total_qte').once("value", function(snapshot) {
+                    
+                  a=parseInt( parseInt(snapshot.val())+s);
+                  write2(p,username,a);
+                      })
+                    } 
+      
+          })
+              })  
+        })
+        
+       sleep(2000).then(() => {if(ll!=0){
+         
+          write4(username);
+        
+          write3(username);
+        }
+        else{
+          $("#ddd").prepend("<p style='margin-top:50%;color:#DBE7ED;' text-center><b>you have never came to our store</b></p>");
+        }})
+      }
+  
+ 
+   
+      
+    
+
+
